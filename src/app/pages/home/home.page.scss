@@ -1,0 +1,103 @@
+.header-section {
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  padding: 32px 24px;
+  color: white;
+  margin-bottom: 8px;
+}
+
+.header-content {
+  h1 {
+    font-size: 28px;
+    font-weight: 700;
+    margin: 0 0 8px 0;
+    color: white;
+  }
+
+  p {
+    font-size: 16px;
+    margin: 0;
+    opacity: 0.95;
+    color: white;
+  }
+}
+
+.cards-container {
+  padding: 8px;
+  margin-bottom: 60px;
+}
+
+.feature-card {
+  margin: 12px;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+
+  &:active {
+    transform: scale(0.98);
+  }
+
+  ion-card-content {
+    padding: 24px;
+    text-align: center;
+  }
+
+  .card-icon-wrapper {
+    width: 80px;
+    height: 80px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 16px;
+
+    ion-icon {
+      font-size: 40px;
+      color: white;
+    }
+  }
+
+  .report-icon {
+    background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
+  }
+
+  .map-icon {
+    background: linear-gradient(135deg, #10b981 0%, #34d399 100%);
+  }
+
+  .stats-icon {
+    background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%);
+  }
+
+  h2 {
+    font-size: 22px;
+    font-weight: 700;
+    margin: 0 0 8px 0;
+    color: #1e293b;
+  }
+
+  p {
+    font-size: 15px;
+    margin: 0;
+    color: #64748b;
+  }
+}
+
+ion-tabs {
+  ion-tab-bar {
+    border-top: 1px solid #e2e8f0;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+    height: 60px;
+
+    ion-tab-button {
+      ion-icon {
+        font-size: 24px;
+      }
+
+      ion-label {
+        font-size: 12px;
+        font-weight: 600;
+      }
+    }
+  }
+}

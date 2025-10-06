@@ -1,0 +1,85 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title>Report Crime</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="report-container">
+    <div class="form-header">
+      <ion-icon name="shield-checkmark-outline"></ion-icon>
+      <h2>Submit Incident Report</h2>
+      <p>Help make your community safer</p>
+    </div>
+
+    <ion-card class="form-card">
+      <ion-card-content>
+        <div class="form-group">
+          <ion-label class="form-label">Crime Type *</ion-label>
+          <ion-select 
+            [(ngModel)]="report.crimeType" 
+            placeholder="Select crime type"
+            interface="action-sheet">
+            <ion-select-option *ngFor="let type of crimeTypes" [value]="type">{{type}}</ion-select-option>
+          </ion-select>
+        </div>
+
+        <div class="form-group">
+          <ion-label class="form-label">Date *</ion-label>
+          <ion-input 
+            type="date" 
+            [(ngModel)]="report.date"
+            placeholder="Select date">
+          </ion-input>
+        </div>
+
+        <div class="form-group">
+          <ion-label class="form-label">Location *</ion-label>
+          <ion-input 
+            type="text" 
+            [(ngModel)]="report.location"
+            placeholder="Enter location">
+          </ion-input>
+        </div>
+
+        <div class="form-group">
+          <ion-label class="form-label">Description *</ion-label>
+          <ion-textarea 
+            [(ngModel)]="report.description"
+            rows="5"
+            placeholder="Describe the incident in detail">
+          </ion-textarea>
+        </div>
+
+        <ion-button expand="block" (click)="submitReport()" class="submit-btn">
+          <ion-icon slot="start" name="send-outline"></ion-icon>
+          Submit Report
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <ion-tabs>
+    <ion-tab-bar slot="bottom" color="light">
+      <ion-tab-button tab="home" [routerLink]="['/home']">
+        <ion-icon name="home"></ion-icon>
+        <ion-label>Home</ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button tab="report" [routerLink]="['/report']">
+        <ion-icon name="add-circle"></ion-icon>
+        <ion-label>Report</ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button tab="map" [routerLink]="['/map']">
+        <ion-icon name="map"></ion-icon>
+        <ion-label>Map</ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button tab="stats" [routerLink]="['/stats']">
+        <ion-icon name="stats-chart"></ion-icon>
+        <ion-label>Stats</ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
+</ion-content>
