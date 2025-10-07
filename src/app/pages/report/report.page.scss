@@ -1,0 +1,220 @@
+.report-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding-bottom: 20px;
+}
+
+.form-header {
+  background: linear-gradient(135deg, #10b981 0%, #047857 100%);
+  padding: 32px 24px;
+  text-align: center;
+  margin: -16px -16px 24px -16px;
+  border-radius: 0 0 24px 24px;
+  
+  .icon-wrapper {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 20px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    ion-icon {
+      font-size: 40px;
+      color: white;
+    }
+  }
+  
+  h1 {
+    font-size: 28px;
+    font-weight: 700;
+    margin: 0 0 10px 0;
+    color: white;
+  }
+  
+  p {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 16px;
+    margin: 0;
+    padding: 0 20px;
+  }
+}
+
+.form-card {
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  margin: 16px 0;
+  
+  ion-card-content {
+    padding: 24px;
+  }
+}
+
+.form-section {
+  margin-bottom: 24px;
+}
+
+.custom-item {
+  --background: #f8fafc;
+  --border-radius: 12px;
+  --padding-start: 16px;
+  --padding-end: 16px;
+  --inner-padding-end: 16px;
+  border-radius: 12px;
+  margin-bottom: 8px;
+  
+  ion-icon {
+    font-size: 24px;
+    margin-right: 12px;
+    color: #10b981;
+  }
+}
+
+.custom-label {
+  font-weight: 600;
+  font-size: 14px;
+  color: #1f2937;
+  margin-bottom: 8px;
+  
+  .required {
+    color: #ef4444;
+    margin-left: 2px;
+  }
+}
+
+ion-select,
+ion-input,
+ion-textarea {
+  --background: transparent;
+  --padding-start: 0;
+  font-size: 15px;
+  color: #1f2937;
+}
+
+ion-textarea {
+  --padding-top: 12px;
+  --padding-bottom: 12px;
+}
+
+.textarea-item {
+  --background: #f8fafc;
+  border-radius: 12px;
+  padding: 8px;
+}
+
+.character-count {
+  text-align: right;
+  font-size: 12px;
+  color: #6b7280;
+  margin-top: 4px;
+  padding-right: 8px;
+}
+
+/* Fix location button color */
+.location-btn {
+  margin-top: 8px;
+  margin-left: 40px;
+  font-size: 13px;
+  color: #10b981 !important; /* Changed to black */
+  
+  ion-icon {
+    font-size: 16px;
+    color: #10b981 !important; /* Changed to black */
+  }
+}
+
+.checkbox-item {
+  --background: transparent;
+  --padding-start: 0;
+  
+  ion-checkbox {
+    margin-right: 12px;
+    --border-color: #10b981;
+    --checkmark-color: white;
+    --background-checked: #10b981;
+  }
+  
+  .checkbox-label {
+    font-size: 14px;
+    color: #1f2937;
+  }
+}
+
+.submit-btn {
+  --background: linear-gradient(135deg, #10b981, #047857);
+  --border-radius: 12px;
+  height: 56px;
+  font-size: 16px;
+  font-weight: 600;
+  margin-top: 24px;
+  text-transform: none;
+  letter-spacing: 0.5px;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+  
+  &:disabled {
+    opacity: 0.5;
+  }
+}
+
+.info-card {
+  border-radius: 12px;
+  background: #f0fdf4;
+  box-shadow: none;
+  margin: 16px 0;
+  border: 1px solid #d1fae5;
+  
+  .info-content {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    
+    ion-icon {
+      font-size: 24px;
+      flex-shrink: 0;
+      margin-top: 2px;
+      color: #10b981;
+    }
+    
+    p {
+      margin: 0;
+      font-size: 13px;
+      line-height: 1.6;
+      color: #065f46;
+    }
+  }
+}
+
+// Global fix for time input in dark mode
+@media (prefers-color-scheme: dark) {
+  ion-input[type="time"] {
+    color: #000000 !important;
+  }
+  
+  ion-input[type="time"]::part(native) {
+    color: #000000 !important;
+    background: #ffffff !important;
+  }
+}
+
+// Responsive Design
+@media (max-width: 576px) {
+  .form-header {
+    h1 {
+      font-size: 24px;
+    }
+    
+    p {
+      font-size: 14px;
+    }
+  }
+  
+  .form-card ion-card-content {
+    padding: 16px;
+  }
+  
+  .location-btn {
+    margin-left: 32px;
+  }
+}

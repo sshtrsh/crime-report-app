@@ -1,20 +1,111 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
+  <ion-toolbar color="primary">
+    <ion-title>E-Sumbong</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="openAdminLogin()">
+        <ion-icon name="shield" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+<ion-content [fullscreen]="true" class="ion-padding">
+  <!-- Header Section -->
+  <div class="header-section">
+    <div class="logo-wrapper">
+      <ion-icon name="shield-checkmark"></ion-icon>
+    </div>
+    <h1>Community Safety</h1>
+    <p>Report incidents and view crime patterns in your area</p>
   </div>
+
+  <!-- Quick Stats -->
+<div class="stats-section">
+  <ion-card class="stat-card">
+    <ion-card-content>
+      <ion-icon name="document-text" color="medium"></ion-icon>
+      <h3>0</h3>
+      <p>No reports yet</p>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card class="stat-card">
+    <ion-card-content>
+      <ion-icon name="location" color="medium"></ion-icon>
+      <h3>0</h3>
+      <p>No hotspots yet</p>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card class="stat-card">
+    <ion-card-content>
+      <ion-icon name="trending-up" color="medium"></ion-icon>
+      <h3>0%</h3>
+      <p>No data yet</p>
+    </ion-card-content>
+  </ion-card>
+</div>
+
+  <!-- Main Action Cards -->
+  <div class="action-cards">
+    <!-- Report Crime Card -->
+    <ion-card class="action-card" button routerLink="/report">
+      <ion-card-content>
+        <div class="card-icon report">
+          <ion-icon name="document-text-outline"></ion-icon>
+        </div>
+        <h2>Report Crime</h2>
+        <p>Submit incident report</p>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- View Map Card -->
+    <ion-card class="action-card" button routerLink="/map">
+      <ion-card-content>
+        <div class="card-icon map">
+          <ion-icon name="map-outline"></ion-icon>
+        </div>
+        <h2>Crime Map</h2>
+        <p>View hotspots & patterns</p>
+        <ion-badge color="success">K-Means Active</ion-badge>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Statistics Card -->
+    <ion-card class="action-card" button routerLink="/stats">
+      <ion-card-content>
+        <div class="card-icon stats">
+          <ion-icon name="bar-chart-outline"></ion-icon>
+        </div>
+        <h2>Statistics</h2>
+        <p>Analytics & predictions</p>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <!-- Predictive Analytics Section -->
+  <ion-card class="predictive-card">
+    <ion-card-header>
+      <ion-card-title>
+        <ion-icon name="analytics" color="primary"></ion-icon>
+        Predictive Insights
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <div class="insight-item">
+        <ion-icon name="warning" color="warning"></ion-icon>
+        <div class="insight-text">
+          <strong>High Risk Area</strong>
+          <p>Main Street shows increased theft activity</p>
+        </div>
+      </div>
+      <div class="insight-item">
+        <ion-icon name="time" color="success"></ion-icon>
+        <div class="insight-text">
+          <strong>Peak Hours</strong>
+          <p>6 PM - 10 PM: 60% of incidents occur</p>
+        </div>
+      </div>
+    </ion-card-content>
+  </ion-card>
 </ion-content>

@@ -1,0 +1,197 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Report Crime</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <div class="report-container">
+    <!-- Header Section -->
+    <div class="form-header">
+      <div class="icon-wrapper">
+        <ion-icon name="document-text"></ion-icon>
+      </div>
+      <h1>Report Incident</h1>
+      <p>Help keep your community safe by reporting incidents</p>
+    </div>
+
+    <!-- Report Form -->
+    <ion-card class="form-card">
+      <ion-card-content>
+        <form #reportForm="ngForm">
+          
+          <!-- Crime Type -->
+          <div class="form-section">
+            <ion-item lines="none" class="custom-item">
+              <ion-icon name="alert-circle" slot="start" color="primary"></ion-icon>
+              <ion-label position="stacked" class="custom-label">
+                Crime Type <span class="required">*</span>
+              </ion-label>
+              <ion-select 
+                [(ngModel)]="report.crimeType" 
+                name="crimeType"
+                placeholder="Select type of crime"
+                interface="action-sheet"
+                [interfaceOptions]="customActionSheetOptions"
+                required>
+                <ion-select-option *ngFor="let type of crimeTypes" [value]="type.value">
+                  {{ type.label }}
+                </ion-select-option>
+              </ion-select>
+            </ion-item>
+          </div>
+
+          <!-- Date and Time -->
+          <div class="form-section">
+            <ion-item lines="none" class="custom-item">
+              <ion-icon name="calendar" slot="start" color="primary"></ion-icon>
+              <ion-label position="stacked" class="custom-label">
+                Date of Incident <span class="required">*</span>
+              </ion-label>
+              <ion-input 
+                type="date" 
+                [(ngModel)]="report.date"
+                name="date"
+                [max]="maxDate"
+                placeholder="Select date"
+                required>
+              </ion-input>
+            </ion-item>
+          </div>
+
+          <div class="form-section">
+            <ion-item lines="none" class="custom-item">
+              <ion-icon name="time" slot="start" color="primary"></ion-icon>
+              <ion-label position="stacked" class="custom-label">
+                Time of Incident
+              </ion-label>
+              <ion-input 
+                type="time" 
+                [(ngModel)]="report.time"
+                name="time"
+                placeholder="Select time">
+              </ion-input>
+            </ion-item>
+          </div>
+
+          <!-- Location -->
+          <div class="form-section">
+            <ion-item lines="none" class="custom-item">
+              <ion-icon name="location" slot="start" color="primary"></ion-icon>
+              <ion-label position="stacked" class="custom-label">
+                Location <span class="required">*</span>
+              </ion-label>
+              <ion-input 
+                type="text" 
+                [(ngModel)]="report.location"
+                name="location"
+                placeholder="Enter street address or landmark"
+                required>
+              </ion-input>
+            </ion-item>
+            <ion-button 
+              fill="clear" 
+              size="small" 
+              class="location-btn"
+              (click)="useCurrentLocation()">
+              <ion-icon slot="start" name="navigate"></ion-icon>
+              Use Current Location
+            </ion-button>
+          </div>
+
+          <!-- Description -->
+          <div class="form-section">
+            <ion-item lines="none" class="custom-item textarea-item">
+              <ion-icon name="document-text" slot="start" color="primary"></ion-icon>
+              <ion-label position="stacked" class="custom-label">
+                Description <span class="required">*</span>
+              </ion-label>
+              <ion-textarea 
+                [(ngModel)]="report.description"
+                name="description"
+                rows="6"
+                placeholder="Describe what happened in detail (who, what, when, where, how)..."
+                [counter]="true"
+                maxlength="500"
+                required>
+              </ion-textarea>
+            </ion-item>
+            <div class="character-count">
+              {{ report.description.length }}/500 characters
+            </div>
+          </div>
+
+          <!-- Contact Information (Optional) -->
+          <div class="form-section">
+            <ion-item lines="none" class="custom-item">
+              <ion-icon name="person" slot="start" color="medium"></ion-icon>
+              <ion-label position="stacked" class="custom-label">
+                Your Name (Optional)
+              </ion-label>
+              <ion-input 
+                type="text" 
+                [(ngModel)]="report.reporterName"
+                name="reporterName"
+                placeholder="Enter your name">
+              </ion-input>
+            </ion-item>
+          </div>
+
+          <div class="form-section">
+            <ion-item lines="none" class="custom-item">
+              <ion-icon name="call" slot="start" color="medium"></ion-icon>
+              <ion-label position="stacked" class="custom-label">
+                Contact Number (Optional)
+              </ion-label>
+              <ion-input 
+                type="tel" 
+                [(ngModel)]="report.contactNumber"
+                name="contactNumber"
+                placeholder="Enter contact number">
+              </ion-input>
+            </ion-item>
+          </div>
+
+          <!-- Anonymous Checkbox -->
+          <div class="form-section">
+            <ion-item lines="none" class="custom-item checkbox-item">
+              <ion-checkbox 
+                slot="start" 
+                [(ngModel)]="report.anonymous"
+                name="anonymous">
+              </ion-checkbox>
+              <ion-label class="checkbox-label">
+                Submit anonymously
+              </ion-label>
+            </ion-item>
+          </div>
+
+          <!-- Submit Button -->
+          <ion-button 
+            expand="block" 
+            (click)="submitReport()" 
+            class="submit-btn"
+            [disabled]="isSubmitting">
+            <ion-icon slot="start" name="send"></ion-icon>
+            {{ isSubmitting ? 'Submitting...' : 'Submit Report' }}
+          </ion-button>
+
+        </form>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Info Note -->
+    <ion-card class="info-card">
+      <ion-card-content>
+        <div class="info-content">
+          <ion-icon name="information-circle" color="primary"></ion-icon>
+          <p>Your report will be reviewed by barangay officials before appearing on the public map. All reports are treated confidentially.</p>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>
+        
