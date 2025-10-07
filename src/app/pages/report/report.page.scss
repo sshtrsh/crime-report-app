@@ -1,109 +1,379 @@
 .report-container {
-  padding-bottom: 70px;
+  max-width: 800px;
+  margin: 0 auto;
+  padding-bottom: 20px;
 }
 
 .form-header {
-  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  background: linear-gradient(135deg, #10b981 0%, #047857 100%);
   padding: 32px 24px;
   text-align: center;
-  color: white;
-  margin-bottom: 16px;
-
-  ion-icon {
-    font-size: 60px;
-    margin-bottom: 16px;
+  margin: 30px 0;
+  border-radius: 16px;
+  
+  .icon-wrapper {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 20px;
+    background: linear-gradient(135deg, var(--ion-color-primary), #065f46);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    
+    ion-icon {
+      font-size: 40px;
+      color: white;
+    }
   }
-
-  h2 {
-    font-size: 24px;
+  
+  h1 {
+    font-size: 28px;
     font-weight: 700;
-    margin: 0 0 8px 0;
+    margin: 0 0 10px 0;
     color: white;
   }
-
-  p {
-    font-size: 15px;
+  
+  .subtitle {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 16px;
     margin: 0;
-    opacity: 0.95;
-    color: white;
+    padding: 0 20px;
   }
 }
 
 .form-card {
-  margin: 16px;
-  border-radius: 20px;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  margin: 16px 0;
+  background: #1f2937; // Dark background for the card
+  
   ion-card-content {
     padding: 24px;
   }
 }
 
-.form-group {
+.form-section {
   margin-bottom: 24px;
+}
 
-  .form-label {
-    display: block;
-    font-size: 15px;
-    font-weight: 600;
-    color: #334155;
-    margin-bottom: 8px;
+.custom-item {
+  --background: #374151; // Dark gray background for form items
+  --border-radius: 12px;
+  --padding-start: 16px;
+  --padding-end: 16px;
+  --inner-padding-end: 16px;
+  border-radius: 12px;
+  margin-bottom: 8px;
+  border: 1px solid #4b5563;
+  
+  ion-icon {
+    font-size: 24px;
+    margin-right: 12px;
+    color: #10b981; // Green icons
   }
+}
 
-  ion-select,
-  ion-input,
-  ion-textarea {
-    --background: #f8fafc;
-    --border-radius: 12px;
-    --padding-start: 16px;
-    --padding-end: 16px;
-    border: 2px solid #e2e8f0;
-    border-radius: 12px;
-    margin-top: 4px;
-    font-size: 15px;
-
-    &:focus-within {
-      border-color: #2563eb;
-    }
+.custom-label {
+  font-weight: 600;
+  font-size: 14px;
+  color: white; // White labels
+  margin-bottom: 8px;
+  
+  .required {
+    color: #ef4444;
+    margin-left: 2px;
   }
+}
 
-  ion-textarea {
-    --padding-top: 12px;
-    --padding-bottom: 12px;
-    min-height: 120px;
+// FIXED: White Text for All Inputs
+ion-select {
+  --background: transparent;
+  --padding-start: 0;
+  font-size: 15px;
+  color: white !important; // White text
+}
+
+ion-select::part(placeholder) {
+  color: #9ca3af !important; // Light gray placeholder
+}
+
+ion-select::part(text) {
+  color: white !important; // White selected text
+}
+
+ion-select::part(icon) {
+  color: white !important; // White icon
+  opacity: 1;
+}
+
+// FIXED: Input and Textarea - White Text
+ion-input,
+ion-textarea {
+  --background: transparent;
+  --padding-start: 0;
+  font-size: 15px;
+  color: white !important; // White text for user input
+}
+
+// FIXED: Input text color - White
+ion-input::part(native) {
+  color: white !important;
+}
+
+// FIXED: Textarea text color - White
+ion-textarea::part(native) {
+  color: white !important;
+}
+
+// FIXED: Placeholder colors - Light gray
+ion-input::part(placeholder),
+ion-textarea::part(placeholder) {
+  color: #9ca3af !important;
+}
+
+ion-textarea {
+  --padding-top: 12px;
+  --padding-bottom: 12px;
+}
+
+.textarea-item {
+  --background: #374151;
+  border-radius: 12px;
+  padding: 8px;
+  border: 1px solid #4b5563;
+}
+
+// FIXED: Ensure textarea content is white
+.textarea-item ion-textarea {
+  color: white !important;
+}
+
+.character-count {
+  text-align: right;
+  font-size: 12px;
+  color: #9ca3af; // Light gray
+  margin-top: 4px;
+  padding-right: 8px;
+}
+
+.location-btn {
+  margin-top: 8px;
+  margin-left: 40px;
+  font-size: 13px;
+  color: #10b981; // Green color
+  
+  ion-icon {
+    font-size: 16px;
+  }
+}
+
+.checkbox-item {
+  --background: transparent;
+  --padding-start: 0;
+  
+  ion-checkbox {
+    margin-right: 12px;
+    --border-color: #10b981;
+    --checkmark-color: white;
+    --background-checked: #10b981;
+  }
+  
+  .checkbox-label {
+    font-size: 14px;
+    color: white; // White text
   }
 }
 
 .submit-btn {
-  margin-top: 24px;
-  --background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
-  --border-radius: 14px;
-  height: 54px;
+  --background: linear-gradient(135deg, #10b981, #047857);
+  --border-radius: 12px;
+  height: 56px;
   font-size: 16px;
-  font-weight: 700;
+  font-weight: 600;
+  margin-top: 24px;
+  text-transform: none;
   letter-spacing: 0.5px;
-  box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.3);
-
-  ion-icon {
-    font-size: 20px;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+  
+  &:disabled {
+    opacity: 0.5;
   }
 }
 
-ion-tabs {
-  ion-tab-bar {
-    border-top: 1px solid #e2e8f0;
-    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
-    height: 60px;
+.emergency-btn {
+  --border-radius: 12px;
+  height: 48px;
+  font-size: 15px;
+  font-weight: 600;
+  margin-top: 12px;
+  text-transform: none;
+  --color: #ef4444;
+  --border-color: #ef4444;
+  
+  ion-icon {
+    animation: pulse 2s infinite;
+  }
+}
 
-    ion-tab-button {
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+.info-card {
+  border-radius: 12px;
+  background: #10b981;
+  box-shadow: none;
+  margin: 16px 0;
+  
+  
+  .info-content {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    
+    ion-icon {
+      font-size: 24px;
+      flex-shrink: 0;
+      margin-top: 2px;
+      color: #a7f3d0;
+    }
+    
+    p {
+      margin: 0;
+      font-size: 13px;
+      line-height: 1.6;
+      color: white;
+    }
+  }
+}
+
+// Bottom Navigation
+ion-footer {
+  ion-toolbar {
+    --border-style: solid;
+    --border-width: 1px 0 0 0;
+    --border-color: #374151;
+    height: 65px;
+    --background: #1f2937;
+  }
+  
+  ion-button {
+    height: 100%;
+    margin: 0;
+    --padding-start: 0;
+    --padding-end: 0;
+    
+    .tab-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      
       ion-icon {
         font-size: 24px;
+        color: #9ca3af;
       }
-
+      
       ion-label {
-        font-size: 12px;
-        font-weight: 600;
+        font-size: 11px;
+        color: #9ca3af;
+        font-weight: 500;
       }
     }
+    
+    &.active-tab {
+      .tab-content {
+        ion-icon {
+          color: #10b981;
+        }
+        
+        ion-label {
+          color: #10b981;
+          font-weight: 600;
+        }
+      }
+    }
+  }
+}
+
+// FIXED: Action Sheet Styling for Crime Type Selection
+::ng-deep {
+  .action-sheet-group {
+    background: #1f2937;
+  }
+  
+  .action-sheet-title {
+    color: #10b981;
+    font-weight: 600;
+    font-size: 18px;
+  }
+  
+  .action-sheet-sub-title {
+    color: #9ca3af;
+    font-size: 14px;
+  }
+  
+  .action-sheet-button {
+    color: white !important;
+    font-size: 16px;
+    background: #1f2937 !important;
+    
+    &.action-sheet-selected {
+      background: #065f46 !important;
+      color: #10b981 !important;
+      font-weight: 600;
+    }
+  }
+  
+  .action-sheet-cancel {
+    background: #374151 !important;
+    color: #ef4444 !important;
+    font-weight: 600;
+  }
+}
+
+// Responsive Design
+@media (max-width: 576px) {
+  .form-header {
+    h1 {
+      font-size: 24px;
+    }
+    
+    .subtitle {
+      font-size: 14px;
+    }
+  }
+  
+  .form-card ion-card-content {
+    padding: 16px;
+  }
+}
+
+// Light Mode Override - Keep dark theme
+@media (prefers-color-scheme: light) {
+  .form-card {
+    background: #1f2937;
+  }
+  
+  .custom-item {
+    --background: #374151;
+  }
+  
+  .custom-label {
+    color: white;
+  }
+  
+  ion-select::part(text),
+  ion-input::part(native),
+  ion-textarea::part(native) {
+    color: white !important;
   }
 }
