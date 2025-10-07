@@ -1,0 +1,7 @@
+{
+  "name": "e-sumbong-app",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
