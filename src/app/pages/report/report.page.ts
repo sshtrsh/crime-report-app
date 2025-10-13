@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { AlertController, LoadingController, ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
 
@@ -17,9 +18,7 @@ export class ReportPage implements OnInit {
     description: '',
     reporterName: '',
     contactNumber: '',
-    anonymous: false,
-    lat: null as number | null,
-    lng: null as number | null
+    anonymous: false
   };
 
   crimeTypes = [
@@ -30,6 +29,7 @@ export class ReportPage implements OnInit {
     { value: 'vandalism', label: 'Vandalism / Property Damage' },
     { value: 'drug', label: 'Drug-related Activity' },
     { value: 'fraud', label: 'Fraud / Scam' },
+    { value: 'domestic', label: 'Domestic Violence' },
     { value: 'harassment', label: 'Harassment / Stalking' },
     { value: 'suspicious', label: 'Suspicious Activity' },
     { value: 'other', label: 'Other' }
@@ -44,6 +44,7 @@ export class ReportPage implements OnInit {
   maxDate: string;
 
   constructor(
+    private http: HttpClient,
     private alertController: AlertController,
     private loadingController: LoadingController,
     private toastController: ToastController,
@@ -62,7 +63,7 @@ export class ReportPage implements OnInit {
   async useCurrentLocation() {
     const loading = await this.loadingController.create({
       message: 'Getting your location...',
-      duration: 10000
+      duration: 5000
     });
     await loading.present();
 
@@ -72,12 +73,8 @@ export class ReportPage implements OnInit {
           const lat = position.coords.latitude;
           const lng = position.coords.longitude;
           
-          // Store coordinates
-          this.report.lat = lat;
-          this.report.lng = lng;
-          
-          // Try to get address from coordinates
-          await this.getAddressFromCoordinates(lat, lng);
+          // Use reverse geocoding to get address (you can use a service like Google Maps API)
+          this.report.location = `Lat: ${lat.toFixed(6)}, Lng: ${lng.toFixed(6)}`;
           
           await loading.dismiss();
           const toast = await this.toastController.create({
@@ -90,31 +87,12 @@ export class ReportPage implements OnInit {
         },
         async (error) => {
           await loading.dismiss();
-          let errorMessage = 'Unable to get your location. Please enter it manually.';
-          
-          switch (error.code) {
-            case error.PERMISSION_DENIED:
-              errorMessage = 'Location access was denied. Please enable location services.';
-              break;
-            case error.POSITION_UNAVAILABLE:
-              errorMessage = 'Location information is unavailable.';
-              break;
-            case error.TIMEOUT:
-              errorMessage = 'Location request timed out. Please try again.';
-              break;
-          }
-          
           const alert = await this.alertController.create({
             header: 'Location Error',
-            message: errorMessage,
+            message: 'Unable to get your location. Please enter it manually.',
             buttons: ['OK']
           });
           await alert.present();
-        },
-        {
-          enableHighAccuracy: true,
-          timeout: 10000,
-          maximumAge: 60000
         }
       );
     } else {
@@ -128,22 +106,24 @@ export class ReportPage implements OnInit {
     }
   }
 
-  private async getAddressFromCoordinates(lat: number, lng: number): Promise<void> {
-    try {
-      const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&zoom=18&addressdetails=1`);
-      const data = await response.json();
-      
-      if (data && data.display_name) {
-        // Use the full display name as location
-        this.report.location = data.display_name;
-      } else {
-        // Fallback to coordinates if address not found
-        this.report.location = `Near ${lat.toFixed(6)}, ${lng.toFixed(6)}`;
-      }
-    } catch (error) {
-      // Fallback to coordinates if geocoding fails
-      this.report.location = `Near ${lat.toFixed(6)}, ${lng.toFixed(6)}`;
-    }
+  async callEmergency() {
+    const alert = await this.alertController.create({
+      header: 'Emergency Call',
+      message: 'This will dial 911. Do you want to proceed?',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel'
+        },
+        {
+          text: 'Call Now',
+          handler: () => {
+            window.open('tel:911', '_system');
+          }
+        }
+      ]
+    });
+    await alert.present();
   }
 
   async submitReport() {
@@ -169,71 +149,102 @@ export class ReportPage implements OnInit {
       return;
     }
 
-    // Validate location (should have coordinates if using current location)
-    if (this.report.location.includes('Near') && (!this.report.lat || !this.report.lng)) {
-      const alert = await this.alertController.create({
-        header: 'Location Required',
-        message: 'Please use the "Use Current Location" button or provide a specific address.',
-        buttons: ['OK']
-      });
-      await alert.present();
-      return;
-    }
+    // Show confirmation dialog
+    const confirmAlert = await this.alertController.create({
+      header: 'Confirm Submission',
+      message: 'Are you sure you want to submit this report?',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel'
+        },
+        {
+          text: 'Submit',
+          handler: () => {
+            this.performSubmit();
+          }
+        }
+      ]
+    });
+    await confirmAlert.present();
+  }
 
-    this.isSubmitting = true;
-
+  async performSubmit() {
     const loading = await this.loadingController.create({
       message: 'Submitting your report...',
       spinner: 'crescent'
     });
     await loading.present();
 
-    // Simulate API call delay
-    setTimeout(async () => {
-      await loading.dismiss();
-      this.isSubmitting = false;
+    this.isSubmitting = true;
 
-      // Save to localStorage (for now)
-      this.saveReportToStorage();
+    // Prepare form data
+    const formData = new FormData();
+    formData.append('crime_type', this.report.crimeType);
+    formData.append('date', this.report.date);
+    formData.append('time', this.report.time || 'Not specified');
+    formData.append('location', this.report.location);
+    formData.append('description', this.report.description);
+    formData.append('reporter_name', this.report.anonymous ? 'Anonymous' : this.report.reporterName);
+    formData.append('contact_number', this.report.anonymous ? '' : this.report.contactNumber);
+    formData.append('anonymous', this.report.anonymous ? '1' : '0');
+    formData.append('timestamp', new Date().toISOString());
 
-      const alert = await this.alertController.create({
-        header: 'Report Submitted',
-        message: 'Thank you for your report! It will be reviewed by barangay officials.',
-        buttons: [
-          {
-            text: 'Back to Home',
-            handler: () => {
-              this.router.navigate(['/home']);
-            }
-          },
-          {
-            text: 'Submit Another',
-            handler: () => {
-              this.resetForm();
-            }
-          }
-        ]
+    // Submit to server
+    this.http.post('http://localhost/e-sumbong/php/submit_report.php', formData)
+      .subscribe({
+        next: async (response: any) => {
+          await loading.dismiss();
+          this.isSubmitting = false;
+
+          const alert = await this.alertController.create({
+            header: 'Report Submitted',
+            message: 'Thank you for your report. Your submission helps keep our community safe. A reference number has been generated for your records.',
+            buttons: [
+              {
+                text: 'View Reports',
+                handler: () => {
+                  this.router.navigate(['/home']);
+                }
+              },
+              {
+                text: 'Submit Another',
+                handler: () => {
+                  this.resetForm();
+                }
+              }
+            ]
+          });
+          await alert.present();
+        },
+        error: async (error) => {
+          await loading.dismiss();
+          this.isSubmitting = false;
+
+          console.error('Error submitting report:', error);
+
+          const alert = await this.alertController.create({
+            header: 'Submission Failed',
+            message: 'Unable to submit your report at this time. Please check your internet connection and try again.',
+            buttons: [
+              {
+                text: 'Retry',
+                handler: () => {
+                  this.performSubmit();
+                }
+              },
+              {
+                text: 'Cancel',
+                role: 'cancel'
+              }
+            ]
+          });
+          await alert.present();
+        }
       });
-      await alert.present();
-    }, 2000);
   }
 
-  private saveReportToStorage() {
-    const reports = JSON.parse(localStorage.getItem('crimeReports') || '[]');
-    const newReport = {
-      ...this.report,
-      id: Date.now(), // Use timestamp for unique ID
-      status: 'pending',
-      timestamp: new Date().toISOString()
-    };
-    
-    reports.push(newReport);
-    localStorage.setItem('crimeReports', JSON.stringify(reports));
-    
-    console.log('Report saved:', newReport);
-  }
-
-  private resetForm() {
+  resetForm() {
     this.report = {
       crimeType: '',
       date: this.maxDate,
@@ -242,9 +253,7 @@ export class ReportPage implements OnInit {
       description: '',
       reporterName: '',
       contactNumber: '',
-      anonymous: false,
-      lat: null,
-      lng: null
+      anonymous: false
     };
   }
 }

@@ -1,109 +1,70 @@
 <ion-header [translucent]="true">
   <ion-toolbar color="primary">
     <ion-title>E-Sumbong</ion-title>
-    <ion-buttons slot="end">
-      <ion-button (click)="openAdminLogin()">
-        <ion-icon name="shield" slot="icon-only"></ion-icon>
-      </ion-button>
-    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true" class="ion-padding">
-  <!-- Header Section -->
+<ion-content [fullscreen]="true">
   <div class="header-section">
-    <div class="logo-wrapper">
-      <ion-icon name="shield-checkmark"></ion-icon>
+    <div class="header-content">
+      <h1>Crime Reporting System</h1>
+      <p>Report incidents and stay informed about safety in your area</p>
     </div>
-    <h1>Community Safety</h1>
-    <p>Report incidents and view crime patterns in your area</p>
   </div>
 
-  <!-- Quick Stats -->
-  <div class="stats-section">
-    <ion-card class="stat-card">
+  <div class="cards-container">
+    <ion-card class="feature-card report-card" button routerLink="/report">
       <ion-card-content>
-        <ion-icon name="document-text" color="primary"></ion-icon>
-        <h3>24</h3>
-        <p>Reports</p>
-      </ion-card-content>
-    </ion-card>
-
-    <ion-card class="stat-card">
-      <ion-card-content>
-        <ion-icon name="location" color="success"></ion-icon>
-        <h3>3</h3>
-        <p>Hotspots</p>
-      </ion-card-content>
-    </ion-card>
-
-    <ion-card class="stat-card">
-      <ion-icon name="trending-up" color="warning"></ion-icon>
-      <h3>12%</h3>
-      <p>This Month</p>
-    </ion-card>
-  </div>
-
-  <!-- Main Action Cards -->
-  <div class="action-cards">
-    <!-- Report Crime Card -->
-    <ion-card class="action-card" button routerLink="/report">
-      <ion-card-content>
-        <div class="card-icon report">
+        <div class="card-icon-wrapper report-icon">
           <ion-icon name="document-text-outline"></ion-icon>
         </div>
         <h2>Report Crime</h2>
-        <p>Submit incident report</p>
+        <p>Submit a new incident report</p>
       </ion-card-content>
     </ion-card>
 
-    <!-- View Map Card -->
-    <ion-card class="action-card" button routerLink="/map">
+    <ion-card class="feature-card map-card" button routerLink="/map">
       <ion-card-content>
-        <div class="card-icon map">
+        <div class="card-icon-wrapper map-icon">
           <ion-icon name="map-outline"></ion-icon>
         </div>
         <h2>Crime Map</h2>
-        <p>View hotspots & patterns</p>
-        <ion-badge color="success">K-Means Active</ion-badge>
+        <p>View incident locations</p>
       </ion-card-content>
     </ion-card>
 
-    <!-- Statistics Card -->
-    <ion-card class="action-card" button routerLink="/stats">
+    <ion-card class="feature-card stats-card" button routerLink="/stats">
       <ion-card-content>
-        <div class="card-icon stats">
+        <div class="card-icon-wrapper stats-icon">
           <ion-icon name="bar-chart-outline"></ion-icon>
         </div>
         <h2>Statistics</h2>
-        <p>Analytics & predictions</p>
+        <p>View crime analytics</p>
       </ion-card-content>
     </ion-card>
   </div>
 
-  <!-- Predictive Analytics Section -->
-  <ion-card class="predictive-card">
-    <ion-card-header>
-      <ion-card-title>
-        <ion-icon name="analytics" color="primary"></ion-icon>
-        Predictive Insights
-      </ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      <div class="insight-item">
-        <ion-icon name="warning" color="warning"></ion-icon>
-        <div class="insight-text">
-          <strong>High Risk Area</strong>
-          <p>Main Street shows increased theft activity</p>
-        </div>
-      </div>
-      <div class="insight-item">
-        <ion-icon name="time" color="success"></ion-icon>
-        <div class="insight-text">
-          <strong>Peak Hours</strong>
-          <p>6 PM - 10 PM: 60% of incidents occur</p>
-        </div>
-      </div>
-    </ion-card-content>
-  </ion-card>
+  <ion-tabs>
+    <ion-tab-bar slot="bottom" color="light">
+      <ion-tab-button tab="home" [routerLink]="['/home']">
+        <ion-icon name="home"></ion-icon>
+        <ion-label>Home</ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button tab="report" [routerLink]="['/report']">
+        <ion-icon name="add-circle"></ion-icon>
+        <ion-label>Report</ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button tab="map" [routerLink]="['/map']">
+        <ion-icon name="map"></ion-icon>
+        <ion-label>Map</ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button tab="stats" [routerLink]="['/stats']">
+        <ion-icon name="stats-chart"></ion-icon>
+        <ion-label>Stats</ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
 </ion-content>

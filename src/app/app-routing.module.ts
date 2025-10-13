@@ -4,15 +4,6 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: 'home',
-    loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
-  },
-  {
-    path: '',
-    redirectTo: 'home',
-    pathMatch: 'full'
-  },
-  {
-    path: 'home',
     loadChildren: () => import('./pages/home/home.module').then( m => m.HomePageModule)
   },
   {
@@ -28,8 +19,9 @@ const routes: Routes = [
     loadChildren: () => import('./pages/stats/stats.module').then( m => m.StatsPageModule)
   },
   {
-    path: 'admin-dashboard',
-    loadChildren: () => import('./pages/admin-dashboard/admin-dashboard.module').then( m => m.AdminDashboardPageModule)
+    path: '',
+    redirectTo: 'home',
+    pathMatch: 'full'
   },
 ];
 

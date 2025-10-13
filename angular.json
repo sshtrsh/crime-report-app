@@ -29,14 +29,31 @@
                 "glob": "**/*.svg",
                 "input": "node_modules/ionicons/dist/ionicons/svg",
                 "output": "./svg"
+              },
+              {
+                "glob": "**/*",
+                "input": "node_modules/leaflet/dist/images",
+                "output": "assets"
               }
             ],
             "styles": [
-              "node_modules/leaflet/dist/leaflet.css",  
               "src/global.scss", 
-              "src/theme/variables.scss"
+              "src/theme/variables.scss",
+              "node_modules/leaflet/dist/leaflet.css"
             ],
-            "scripts": []
+            "scripts": [],
+            "budgets": [
+              {
+                "type": "initial",
+                "maximumWarning": "2mb",
+                "maximumError": "5mb"
+              },
+              {
+                "type": "anyComponentStyle",
+                "maximumWarning": "6kb",
+                "maximumError": "10kb"
+              }
+            ]
           },
           "configurations": {
             "production": {
@@ -47,9 +64,9 @@
                   "maximumError": "5mb"
                 },
                 {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "2kb",
-                  "maximumError": "4kb"
+                  "type": "anyComponentStyle", 
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
                 }
               ],
               "fileReplacements": [
@@ -76,6 +93,13 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "allowedHosts": [
+              "all"
+            ],
+            "host": "0.0.0.0",
+            "port": 5000
+          },
           "configurations": {
             "production": {
               "buildTarget": "app:build:production"
@@ -113,11 +137,17 @@
                 "glob": "**/*.svg",
                 "input": "node_modules/ionicons/dist/ionicons/svg",
                 "output": "./svg"
+              },
+              {
+                "glob": "**/*",
+                "input": "node_modules/leaflet/dist/images",
+                "output": "assets"
               }
             ],
             "styles": [
-              "node_modules/leaflet/dist/leaflet.css",  
-              "src/theme/variables.scss"
+              "src/global.scss", 
+              "src/theme/variables.scss",
+              "node_modules/leaflet/dist/leaflet.css"
             ],
             "scripts": []
           },
